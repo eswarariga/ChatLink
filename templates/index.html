@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatLink — Private Real-Time Chat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head>
+<body>
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="brand-mark">💬</div>
+      <h1>ChatLink</h1>
+      <p>Your private space to connect</p>
+      <form id="loginForm">
+        <label for="usernameInput">Choose a username</label>
+        <input id="usernameInput" maxlength="24" placeholder="e.g. eswar" autocomplete="off" required>
+        <button class="primary-btn" type="submit">Join ChatLink <span>→</span></button>
+      </form>
+      <small>People on the same network can join using your laptop's IP address.</small>
+    </div>
+  </section>
+
+  <main id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="side-brand">
+        <div class="brand-row"><span class="brand-mark small">💬</span><div><h2>ChatLink</h2><p>PRIVATE • REAL-TIME</p></div></div>
+        <button id="themeBtn" class="icon-btn theme-btn" title="Toggle dark mode">🌙</button>
+      </div>
+      <div class="my-profile">
+        <div class="avatar me-avatar" id="myAvatar">?</div>
+        <div class="profile-copy"><strong id="myName">You</strong><span><i class="status-dot"></i> Online</span></div>
+      </div>
+      <div class="sidebar-heading"><span>CONTACTS</span><span id="contactCount" class="count-pill">0</span></div>
+      <div id="contacts" class="contacts">
+        <div class="empty-contacts">No one else is online yet.<br>Ask a friend to join your Wi-Fi chat.</div>
+      </div>
+      <div class="sidebar-bottom">
+        <span class="network-label"><i class="status-dot"></i> Connected to local network</span>
+        <button id="leaveBtn" class="leave-btn">Leave Chat</button>
+      </div>
+    </aside>
+
+    <section class="chat-panel">
+      <header class="chat-header">
+        <div class="header-person">
+          <div id="chatAvatar" class="avatar header-avatar">👥</div>
+          <div><h3 id="chatTitle">Select a contact</h3><p id="chatSubtitle">Choose someone online to start a private chat</p></div>
+        </div>
+        <div class="header-actions">
+          <input id="searchInput" class="search-input" placeholder="Search this chat…" disabled>
+          <button id="soundBtn" class="icon-btn" title="Notification sounds">🔔</button>
+        </div>
+      </header>
+
+      <div id="welcomePanel" class="welcome-panel">
+        <div class="welcome-icon">✉️</div><h2>Welcome to ChatLink</h2>
+        <p>Select a contact from the left to start a private conversation.</p>
+        <div class="feature-chips"><span>🔒 Private chats</span><span>📎 File sharing</span><span>😊 Reactions</span></div>
+      </div>
+
+      <section id="conversation" class="conversation hidden">
+        <div id="messages" class="messages"></div>
+        <div id="typingIndicator" class="typing-indicator"></div>
+        <form id="messageForm" class="composer">
+          <label class="attach-btn" title="Attach a file">📎<input id="fileInput" type="file" hidden></label>
+          <button id="emojiBtn" type="button" class="composer-icon" title="Insert emoji">😊</button>
+          <div id="emojiPanel" class="emoji-panel hidden">
+            <button type="button">😀</button><button type="button">😂</button><button type="button">🥰</button><button type="button">😍</button>
+            <button type="button">😎</button><button type="button">😭</button><button type="button">👍</button><button type="button">❤️</button>
+            <button type="button">🔥</button><button type="button">🎉</button><button type="button">🙏</button><button type="button">🤝</button>
+          </div>
+          <input id="messageInput" maxlength="4000" placeholder="Write a message…" autocomplete="off" disabled>
+          <button id="sendBtn" class="send-btn" type="submit" disabled>➤</button>
+        </form>
+        <div class="composer-hint">Enter to send · Shift + Enter for a new line · Files up to 10 MB</div>
+      </section>
+    </section>
+  </main>
+  <div id="toast" class="toast"></div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
